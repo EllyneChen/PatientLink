@@ -1,0 +1,96 @@
+/* PatientLink — Patient Portal
+   Calm, clinical palette: deep teal for trust/healthcare, warm off-white
+   background so it doesn't feel as sterile as plain Bootstrap-blue-on-white. */
+
+:root {
+  --pl-teal-900: #0f3d3e;
+  --pl-teal-700: #14605f;
+  --pl-teal-500: #1c8c87;
+  --pl-teal-100: #e3f1ef;
+  --pl-bg: #f7f5f0;
+  --pl-ink: #1f2a2a;
+  --pl-muted: #5d6b6a;
+  --pl-danger: #b3433f;
+}
+
+body {
+  background: var(--pl-bg);
+  color: var(--pl-ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.pl-navbar {
+  background: var(--pl-teal-900);
+}
+
+.pl-navbar .navbar-brand {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pl-navbar .navbar-brand span {
+  color: #8fd9d2;
+}
+
+.pl-card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(15, 61, 62, 0.08), 0 8px 24px rgba(15, 61, 62, 0.06);
+}
+
+.pl-card-header {
+  background: var(--pl-teal-100);
+  border-bottom: 1px solid rgba(15, 61, 62, 0.08);
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+.pl-nupi-pill {
+  display: inline-block;
+  background: var(--pl-teal-900);
+  color: #fff;
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+.btn-pl-primary {
+  background: var(--pl-teal-700);
+  border-color: var(--pl-teal-700);
+  color: #fff;
+}
+
+.btn-pl-primary:hover,
+.btn-pl-primary:focus {
+  background: var(--pl-teal-900);
+  border-color: var(--pl-teal-900);
+  color: #fff;
+}
+
+.pl-field-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pl-muted);
+  margin-bottom: 0.15rem;
+}
+
+.pl-field-value {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.pl-auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--pl-teal-900) 0%, var(--pl-teal-700) 55%, var(--pl-bg) 55%);
+}
+
+.pl-auth-card {
+  width: 100%;
+  max-width: 380px;
+}

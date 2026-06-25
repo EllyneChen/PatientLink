@@ -1,0 +1,41 @@
+.btn-primary, .navbar.bg-dark {
+  background-color: #0f3d3e !important;
+  border-color: #0f3d3e !important;
+}
+.btn-primary:hover {
+  background-color: #14605f !important;
+  border-color: #14605f !important;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+.pl-auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f3d3e 0%, #14605f 50%, #f0f4f4 50%);
+}
+
+.pl-auth-card {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 0.75rem;
+}
+
+.pl-auth-card .btn-primary {
+  background-color: #0f3d3e !important;
+  border-color: #0f3d3e !important;
+}
+
+.pl-auth-card .btn-primary:hover {
+  background-color: #14605f !important;
+  border-color: #14605f !important;
+}
+
+.pl-auth-card .form-control:focus {
+  border-color: #0f3d3e;
+  box-shadow: 0 0 0 0.2rem rgba(15, 61, 62, 0.15);
+}

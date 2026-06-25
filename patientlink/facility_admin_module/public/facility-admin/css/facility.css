@@ -1,0 +1,17 @@
+body {
+  background: #f4f6f9;
+}
+
+.pl-auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #f4f6f9 50%);
+}
+
+.pl-auth-card {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 0.75rem;
+}

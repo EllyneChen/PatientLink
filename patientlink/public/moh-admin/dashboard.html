@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatientLink — MOH Admin Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/moh.css" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand pl-navbar px-4">
+    <span class="navbar-brand fw-bold text-white">PatientLink</span>
+    <span class="text-white-50 small ms-2">MOH Administration</span>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span class="text-white small" id="adminName"></span>
+      <button class="btn btn-outline-light btn-sm" id="logoutBtn">Log out</button>
+    </div>
+  </nav>
+
+  <div class="container-fluid py-4 px-4">
+
+    <!-- Analytics Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="pl-card card stat-card p-3">
+          <div class="stat-number" id="statPatients">—</div>
+          <div class="stat-label">Total Patients</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="pl-card card stat-card p-3">
+          <div class="stat-number" id="statDoctors">—</div>
+          <div class="stat-label">Total Doctors</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="pl-card card stat-card p-3">
+          <div class="stat-number" id="statFacilities">—</div>
+          <div class="stat-label">Facilities</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="pl-card card stat-card p-3">
+          <div class="stat-number" id="activeUsers">—</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consent Stats -->
+    <div class="row g-3 mb-4">
+      <div class="col-4">
+        <div class="pl-card card p-3 text-center">
+          <div class="stat-number text-success" id="consentApproved">—</div>
+          <div class="stat-label">Approved Consents</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="pl-card card p-3 text-center">
+          <div class="stat-number text-warning" id="consentPending">—</div>
+          <div class="stat-label">Pending Consents</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="pl-card card p-3 text-center">
+          <div class="stat-number text-secondary" id="consentExpired">—</div>
+          <div class="stat-label">Expired Consents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Logs -->
+    <div class="pl-card card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">System Audit Log</h5>
+
+        <!-- Filters -->
+        <div class="row g-2 mb-3">
+          <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="filterAction" placeholder="Filter by action…" />
+          </div>
+          <div class="col-md-2">
+            <select class="form-select form-select-sm" id="filterOutcome">
+              <option value="">All outcomes</option>
+              <option value="success">Success</option>
+              <option value="failure">Failure</option>
+              <option value="denied">Denied</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select form-select-sm" id="filterRole">
+              <option value="">All roles</option>
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+              <option value="facility_admin">Facility Admin</option>
+              <option value="moh_admin">MOH Admin</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-pl-primary btn-sm w-100" id="applyFilters">Apply</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Outcome</th>
+                <th>Entity</th>
+              </tr>
+            </thead>
+            <tbody id="logsBody">
+              <tr><td colspan="5" class="text-center text-muted py-3">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-3 d-flex align-items-center" id="pagination"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

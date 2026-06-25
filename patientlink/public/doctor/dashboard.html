@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatientLink — Doctor Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/doctor.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand pl-navbar px-4">
+    <span class="navbar-brand fw-bold text-white">PatientLink</span>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span class="text-white small" id="doctorName"></span>
+      <button class="btn btn-outline-light btn-sm" id="logoutBtn">Log out</button>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+
+    <!-- Step 1: Search Patient -->
+    <div class="pl-card card mb-4" id="searchSection">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Search Patient by NUPI</h5>
+        <div id="searchAlert" class="alert d-none" role="alert"></div>
+        <div class="input-group">
+          <input type="text" class="form-control" id="nupiInput" placeholder="e.g. KE-2024-000123" />
+          <button class="btn btn-pl-primary" id="searchBtn">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Patient Found -->
+    <div class="pl-card card mb-4 d-none" id="patientSection">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Patient Found</h5>
+        <div class="row">
+          <div class="col-md-6 mb-2">
+            <p class="text-muted small mb-0">FULL NAME</p>
+            <p class="fw-semibold" id="patientName">—</p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <p class="text-muted small mb-0">NUPI</p>
+            <p class="fw-semibold" id="patientNupi">—</p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <p class="text-muted small mb-0">DATE OF BIRTH</p>
+            <p class="fw-semibold" id="patientDob">—</p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <p class="text-muted small mb-0">PHONE</p>
+            <p class="fw-semibold" id="patientPhone">—</p>
+          </div>
+        </div>
+        <button class="btn btn-pl-primary mt-2" id="requestConsentBtn">Request Access (Send OTP)</button>
+      </div>
+    </div>
+
+    <!-- Step 3: OTP Verification -->
+    <div class="pl-card card mb-4 d-none" id="otpSection">
+      <div class="card-body">
+        <h5 class="fw-bold mb-1">Enter OTP</h5>
+        <p class="text-muted small mb-3">Ask the patient for the OTP sent to their phone.</p>
+        <div id="otpAlert" class="alert d-none" role="alert"></div>
+        <div class="alert alert-warning small mb-3" id="otpDemo"></div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="otpInput" placeholder="6-digit OTP" maxlength="6" />
+          <button class="btn btn-pl-primary" id="verifyOtpBtn">Verify OTP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Health Records -->
+    <div class="pl-card card mb-4 d-none" id="recordsSection">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Health Records — <span id="recordsPatientName"></span></h5>
+        <div id="recordsList"></div>
+      </div>
+    </div>
+
+    <!-- Step 5: Add Health Record -->
+    <div class="pl-card card d-none" id="addRecordSection">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Add Health Record</h5>
+        <div id="addRecordAlert" class="alert d-none" role="alert"></div>
+        <form id="addRecordForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Diagnosis</label>
+              <input type="text" class="form-control" id="recDiagnosis" placeholder="e.g. Hypertension" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Allergies</label>
+              <input type="text" class="form-control" id="recAllergies" placeholder="e.g. Penicillin, None" />
+            </div>
+            <div class="col-md-6">
+  <label class="form-label">Doctor's Name</label>
+  <input type="text" class="form-control" id="recPrevDoctor" readonly
+    style="background:#f8f9fa; cursor:not-allowed;" />
+</div>
+            <div class="col-md-6">
+              <label class="form-label">Facility</label>
+              <input type="text" class="form-control" id="recFacility" placeholder="e.g. Kenyatta National Hospital" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-control" id="recDate" required />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-pl-primary mt-3" id="addRecordBtn">Save Record</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

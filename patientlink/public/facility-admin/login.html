@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatientLink — Facility Admin Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+  <<link href="css/facility.css?v=2" rel="stylesheet" />
+</head>
+<body>
+  <div class="pl-auth-shell">
+    <div class="pl-auth-card card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-1 fw-bold" style="color: #0f3d3e;">PatientLink</h1>
+        <p class="text-muted mb-4">Facility Administrator Portal</p>
+        <div id="loginAlert" class="alert alert-danger d-none" role="alert"></div>
+        <form id="loginForm" novalidate>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" required autocomplete="username" />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required autocomplete="current-password" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100" id="loginBtn">Log in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

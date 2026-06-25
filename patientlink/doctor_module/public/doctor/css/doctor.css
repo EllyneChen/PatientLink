@@ -1,0 +1,45 @@
+:root {
+  --pl-teal-900: #0d3b38;
+  --pl-teal-600: #1a6b63;
+  --pl-teal-100: #e6f4f3;
+  --pl-accent:   #17a99a;
+}
+
+body { background: #f4f6f5; font-family: 'Segoe UI', sans-serif; }
+
+/* Navbar */
+.pl-navbar { background: var(--pl-teal-900); }
+
+/* Auth shell */
+.pl-auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--pl-teal-900) 40%, var(--pl-teal-100) 100%);
+}
+.pl-auth-card { max-width: 420px; width: 100%; border: none; border-radius: 1rem; box-shadow: 0 8px 32px rgba(13,59,56,.15); }
+
+/* Cards */
+.pl-card { border: none; border-radius: .75rem; box-shadow: 0 2px 12px rgba(13,59,56,.08); }
+
+/* Buttons */
+.btn-pl-primary {
+  background: var(--pl-teal-600);
+  border-color: var(--pl-teal-600);
+  color: #fff;
+}
+.btn-pl-primary:hover {
+  background: var(--pl-teal-900);
+  border-color: var(--pl-teal-900);
+  color: #fff;
+}
+
+/* Record card */
+.record-card {
+  border: 1px solid var(--pl-teal-100);
+  border-radius: .5rem;
+  padding: 1rem;
+  margin-bottom: .75rem;
+  background: #fff;
+}

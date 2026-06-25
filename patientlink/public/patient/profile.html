@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatientLink — My Profile</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/patient.css" rel="stylesheet" />
+</head>
+<body>
+
+  <nav class="navbar pl-navbar navbar-dark mb-4">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1">Patient<span>Link</span></span>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white-50 small d-none d-sm-inline" id="navUserName"></span>
+        <button class="btn btn-sm btn-outline-light" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="max-width: 720px;">
+
+    <div id="pageAlert" class="alert d-none" role="alert"></div>
+
+    <div class="card pl-card mb-4" id="profileCard">
+      <div class="card-header pl-card-header d-flex justify-content-between align-items-center py-3">
+        <div>
+          <h1 class="h5 mb-1">My Profile</h1>
+          <span class="pl-nupi-pill" id="nupiPill">NUPI: —</span>
+        </div>
+        <button class="btn btn-pl-primary btn-sm" id="editBtn" data-bs-toggle="modal" data-bs-target="#editModal">
+          Edit profile
+        </button>
+      </div>
+
+      <div class="card-body" id="profileBody">
+        <div class="text-center text-muted py-4" id="loadingState">Loading your profile…</div>
+
+        <div class="row gy-3 d-none" id="profileFields">
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Full name</p>
+            <p class="pl-field-value" id="fieldName">—</p>
+          </div>
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Email</p>
+            <p class="pl-field-value" id="fieldEmail">—</p>
+          </div>
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Date of birth</p>
+            <p class="pl-field-value" id="fieldDob">—</p>
+          </div>
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Phone</p>
+            <p class="pl-field-value" id="fieldPhone">—</p>
+          </div>
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Next of kin</p>
+            <p class="pl-field-value" id="fieldNokName">—</p>
+          </div>
+          <div class="col-md-6">
+            <p class="pl-field-label mb-0">Next of kin phone</p>
+            <p class="pl-field-value" id="fieldNokPhone">—</p>
+          </div>
+          <div class="col-12">
+            <p class="pl-field-label mb-0">Data sharing preference</p>
+            <span class="badge" id="fieldConsent">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-muted small">
+      Note: your NUPI, full name, date of birth, and email aren't editable from this page —
+      these are fixed identity fields managed by the system.
+    </p>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="editForm">
+          <div class="modal-header">
+            <h2 class="modal-title h5">Edit profile</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="editAlert" class="alert alert-danger d-none py-2" role="alert"></div>
+
+            <div class="mb-3">
+              <label for="editName" class="form-label">Full name</label>
+              <input type="text" class="form-control" id="editName" readonly style="background:#f8f9fa;" />
+            </div>
+            <div class="mb-3">
+              <label for="editDob" class="form-label">Date of birth</label>
+              <input type="date" class="form-control" id="editDob" readonly style="background:#f8f9fa;" />
+            </div>
+            <div class="mb-3">
+              <label for="editPhone" class="form-label">Phone</label>
+              <input type="tel" class="form-control" id="editPhone" required maxlength="20" />
+            </div>
+            <div class="mb-3">
+              <label for="editNokName" class="form-label">Next of kin name</label>
+              <input type="text" class="form-control" id="editNokName" maxlength="255" />
+            </div>
+            <div class="mb-3">
+              <label for="editNokPhone" class="form-label">Next of kin phone</label>
+              <input type="tel" class="form-control" id="editNokPhone" maxlength="20" />
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="editConsent" />
+              <label class="form-check-label" for="editConsent">
+                Allow my data to be shared with doctors who request consented access
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-pl-primary" id="saveBtn">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
