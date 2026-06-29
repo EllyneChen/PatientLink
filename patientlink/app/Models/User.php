@@ -29,7 +29,7 @@ class User extends Authenticatable implements JWTSubject
         'is_active' => 'boolean',
     ];
 
-    // ── Role-specific relationships ─────────────────────────────
+    //  Role-specific relationships 
     public function patient()
     {
         return $this->hasOne(Patient::class);
@@ -55,7 +55,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(AuditLog::class, 'actor_id');
     }
 
-    // ── JWTSubject implementation ───────────────────────────────
+    //  JWTSubject implementation 
     public function getJWTIdentifier()
     {
         return $this->getKey();

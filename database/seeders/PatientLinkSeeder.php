@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * PatientLinkSeeder
- * -------------------
  * Seeds one test account per role so you can immediately test the
  * RBAC/JWT login endpoints without manually registering each role.
  *
@@ -29,7 +28,7 @@ class PatientLinkSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── Facility ─────────────────────────────────────────────
+        //  Facility 
         $facility = Facility::create([
             'name'     => 'Kenyatta National Hospital',
             'location' => 'Nairobi, Kenya',
@@ -37,7 +36,7 @@ class PatientLinkSeeder extends Seeder
             'status'   => 'active',
         ]);
 
-        // ── Doctor ───────────────────────────────────────────────
+        //  Doctor 
         $doctorUser = User::create([
             'name'     => 'Dr. Amina Osei',
             'email'    => 'doctor@patientlink.test',
@@ -53,7 +52,7 @@ class PatientLinkSeeder extends Seeder
             'phone'          => '254712345001',
         ]);
 
-        // ── Patient ──────────────────────────────────────────────
+        //  Patient
         $patientUser = User::create([
             'name'     => 'Wanjiku Muthoni',
             'email'    => 'patient@patientlink.test',
@@ -71,7 +70,7 @@ class PatientLinkSeeder extends Seeder
             'data_sharing_consent' => true,
         ]);
 
-        // ── Facility Admin ───────────────────────────────────────
+        //  Facility Admin
         $facilityAdminUser = User::create([
             'name'     => 'Peter Kamau',
             'email'    => 'facilityadmin@patientlink.test',
@@ -85,7 +84,7 @@ class PatientLinkSeeder extends Seeder
             'admin_level' => 'standard',
         ]);
 
-        // ── MOH Admin ────────────────────────────────────────────
+        //  MOH Admin
         $mohAdminUser = User::create([
             'name'     => 'James Otieno',
             'email'    => 'mohadmin@patientlink.test',
