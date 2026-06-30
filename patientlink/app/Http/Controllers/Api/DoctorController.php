@@ -68,7 +68,18 @@ class DoctorController extends Controller
             'expires_at'   => now()->addMinutes(10),
         ]);
 
-        Log::info("SIMULATED SMS to {$patient->phone}: OTP is {$otp}. Valid 10 minutes.");
+       try {
+    $AT = new \AfricasTalking\SDK\AfricasTalking(
+        env('AT_USERNAME'),
+        env('AT_API_KEY')
+    );
+    $AT->sms()->send([
+        'to'      => '+' . $patient->phone,
+        'message' => "Your PatientLink OTP is {$otp}. Valid for 10 minutes. Do not share this code.",
+    ]);
+} catch (\Exception $smsEx) {
+    Log::warning("SMS failed: " . $smsEx->getMessage());
+}
 
         AuditLog::record($user->id, 'CONSENT_REQUESTED', 'success', null, null, [
             'nupi'       => $request->nupi,
