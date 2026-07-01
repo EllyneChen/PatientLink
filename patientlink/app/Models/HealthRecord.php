@@ -11,8 +11,10 @@ class HealthRecord extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
+        'id',
         'patient_nupi',
         'facility_id',
+        'doctor_id',
         'summary',
         'encrypted',
     ];

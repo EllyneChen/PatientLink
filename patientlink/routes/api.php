@@ -22,6 +22,8 @@ Route::middleware(["auth:api", "role:doctor"])->prefix("doctor")->group(function
     Route::post("/consent/verify", [DoctorController::class, "verifyConsent"]);
     Route::get("/records/{nupi}", [DoctorController::class, "viewRecords"]);
     Route::post('/records/{nupi}',  [DoctorController::class, 'addRecord']);
+    Route::get('/records/{nupi}/export-pdf', [DoctorController::class, 'exportRecordsPdf']);
+    Route::get('/records/{nupi}/export-pdf/{recordId}', [DoctorController::class, 'exportSingleRecordPdf']);
 });
 
 Route::middleware(["auth:api", "role:patient"])->prefix("patient")->group(function () {

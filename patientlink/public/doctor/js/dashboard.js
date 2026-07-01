@@ -95,10 +95,11 @@ async function loadRecords() {
         '<div class="row g-2">' +
         '<div class="col-6"><div class="small text-muted">DIAGNOSIS</div><div>' + (summary.diagnosis || '-') + '</div></div>' +
         '<div class="col-6"><div class="small text-muted">ALLERGIES</div><div>' + (summary.allergies || '-') + '</div></div>' +
-        '<div class="col-6"><div class="small text-muted">PREVIOUS DOCTOR</div><div>' + (summary.previous_doctor || '-') + '</div></div>' +
+        '<div class="col-6"><div class="small text-muted">DOCTOR</div><div>' + (summary.previous_doctor || '-') + '</div></div>' +
         '<div class="col-6"><div class="small text-muted">FACILITY</div><div>' + (summary.facility || '-') + '</div></div>' +
         '</div>' +
         '<div class="mt-2"><div class="small text-muted">CLINICAL NOTES</div><div>' + (summary.clinical_notes ? summary.clinical_notes.replace(/\n/g, '<br>') : '-') + '</div></div>' +
+        '<div class="mt-3 text-end"><button class="btn btn-sm btn-pl-primary" onclick="exportSingleRecord(\'' + r.id + '\', \'' + currentNupi + '\')">Download Record (PDF)</button></div>' +
         '</div></div>';
     }).join('');
   }
@@ -135,3 +136,54 @@ document.getElementById('addRecordForm').addEventListener('submit', async functi
     btn.textContent = 'Save Record';
   }
 });
+
+document.getElementById('exportPdfBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('exportPdfBtn');
+  const textEl = document.getElementById('exportPdfText');
+  btn.disabled = true;
+  textEl.textContent = 'Generating...';
+  try {
+    const token = PL.getToken();
+    const res = await fetch('/api/doctor/records/' + encodeURIComponent(currentNupi) + '/export-pdf', {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    if (!res.ok) throw new Error('Failed to generate PDF');
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'patient-records-' + currentNupi + '.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    alert(err.message || 'Failed to generate PDF');
+  } finally {
+    btn.disabled = false;
+    textEl.textContent = 'Export My Records (PDF)';
+  }
+});
+
+window.exportSingleRecord = async function(recordId, nupi) {
+  try {
+    const token = PL.getToken();
+    const res = await fetch('/api/doctor/records/' + encodeURIComponent(nupi) + '/export-pdf/' + recordId, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    if (!res.ok) throw new Error('Failed to generate PDF');
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'record-' + recordId + '.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    alert(err.message || 'Failed to generate PDF');
+  }
+};

@@ -190,6 +190,7 @@ class DoctorController extends Controller
         'id'           => (string) \Illuminate\Support\Str::uuid(),
         'patient_nupi' => $nupi,
         'facility_id'  => $doctor->facility_id,
+        'doctor_id'    => $doctor->id,
         'summary'      => json_encode([
             'diagnosis'       => $request->diagnosis,
             'allergies'       => $request->allergies,
@@ -207,5 +208,66 @@ class DoctorController extends Controller
     ]);
 
     return response()->json(['message' => 'Record added successfully'], 201);
+}
+
+public function exportRecordsPdf(Request $request, string $nupi)
+{
+    $user   = JWTAuth::parseToken()->authenticate();
+    $doctor = Doctor::where('user_id', $user->id)->firstOrFail();
+
+    $records = HealthRecord::where('patient_nupi', $nupi)
+        ->where('doctor_id', $doctor->id)
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function($r) {
+            $summary = is_string($r->summary) ? json_decode($r->summary, true) : $r->summary;
+            return [
+                'date'           => $r->created_at ? $r->created_at->format('d M Y') : '-',
+                'diagnosis'      => $summary['diagnosis'] ?? '-',
+                'allergies'      => $summary['allergies'] ?? '-',
+                'facility'       => $summary['facility'] ?? '-',
+                'clinical_notes' => $summary['clinical_notes'] ?? '-',
+            ];
+        });
+
+    $patient = \App\Models\Patient::where('nupi', $nupi)->firstOrFail();
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('reports.doctor-records', [
+        'records'     => $records,
+        'patientName' => $patient->name ?? $nupi,
+        'doctorName'  => $user->name,
+        'generatedAt' => now()->format('d M Y, H:i'),
+    ]);
+
+    return $pdf->download('patient-records-' . $nupi . '.pdf');
+}
+public function exportSingleRecordPdf(Request $request, string $nupi, string $recordId)
+{
+    $user   = JWTAuth::parseToken()->authenticate();
+    $doctor = Doctor::where('user_id', $user->id)->firstOrFail();
+
+    $record = HealthRecord::where('id', $recordId)
+        ->where('patient_nupi', $nupi)
+        ->where('doctor_id', $doctor->id)
+        ->firstOrFail();
+
+    $summary = is_string($record->summary) ? json_decode($record->summary, true) : $record->summary;
+    $patient = Patient::where('nupi', $nupi)->with('user:id,name')->firstOrFail();
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('reports.doctor-single-record', [
+        'record' => [
+            'date'           => $record->created_at ? $record->created_at->format('d M Y') : '-',
+            'diagnosis'      => $summary['diagnosis'] ?? '-',
+            'allergies'      => $summary['allergies'] ?? '-',
+            'facility'       => $summary['facility'] ?? '-',
+            'clinical_notes' => $summary['clinical_notes'] ?? '-',
+        ],
+        'patientName' => $patient->user->name ?? $nupi,
+        'patientNupi' => $nupi,
+        'doctorName'  => $user->name,
+        'generatedAt' => now()->format('d M Y, H:i'),
+    ]);
+
+    return $pdf->download('record-' . $nupi . '-' . $record->created_at->format('Y-m-d') . '.pdf');
 }
 }

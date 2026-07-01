@@ -58,6 +58,47 @@ class MohAdminController extends Controller
         ]);
     }
 
+    public function generateReportPdf()
+{
+    $totalPatients   = Patient::count();
+    $totalDoctors    = Doctor::count();
+    $totalFacilities = Facility::count();
+    $activeUsers     = User::where('is_active', true)->count();
+
+    $consentStats = [
+        'pending'  => ConsentRecord::where('status', 'pending')->count(),
+        'approved' => ConsentRecord::where('status', 'approved')->count(),
+        'rejected' => ConsentRecord::where('status', 'rejected')->count(),
+        'expired'  => ConsentRecord::where('status', 'expired')->count(),
+    ];
+
+    $recentActivity = AuditLog::with('actor:id,name,role')
+        ->orderBy('timestamp', 'desc')
+        ->limit(15)
+        ->get()
+        ->map(fn($l) => [
+            'actor'     => $l->actor ? $l->actor->name : 'System',
+            'role'      => $l->actor ? $l->actor->role : '—',
+            'action'    => $l->action,
+            'outcome'   => $l->outcome,
+            'timestamp' => $l->timestamp,
+        ]);
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('reports.moh-report', [
+        'totals' => [
+            'patients'   => $totalPatients,
+            'doctors'    => $totalDoctors,
+            'facilities' => $totalFacilities,
+        ],
+        'consents'       => $consentStats,
+        'activeUsers'    => $activeUsers,
+        'recentActivity' => $recentActivity,
+        'generatedAt'    => now()->format('d M Y, H:i'),
+    ]);
+
+    return $pdf->download('patientlink-moh-report-' . now()->format('Y-m-d') . '.pdf');
+}
+
     public function auditLogs(Request $request)
     {
         $query = AuditLog::with('actor:id,name,role')

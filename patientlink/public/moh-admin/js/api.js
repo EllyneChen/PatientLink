@@ -39,3 +39,34 @@ const PL = (() => {
 
   return { api, getToken, getUser, saveSession, clearSession };
 })();
+document.getElementById('downloadReportBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('downloadReportBtn');
+  const textEl = document.getElementById('downloadReportText');
+  btn.disabled = true;
+  textEl.textContent = 'Generating…';
+
+  try {
+    const token = PL.getToken();
+    const res = await fetch('/api/moh-admin/report/pdf', {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    if (!res.ok) throw new Error('Failed to generate report');
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'patientlink-moh-report.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    alert(err.message || 'Failed to generate report');
+  } finally {
+    btn.disabled = false;
+    textEl.textContent = 'Generate Report (PDF)';
+  }
+});
