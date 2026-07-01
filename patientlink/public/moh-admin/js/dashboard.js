@@ -22,8 +22,7 @@ async function loadAnalytics() {
     document.getElementById('statPatients').textContent   = data.totals.patients;
     document.getElementById('statDoctors').textContent    = data.totals.doctors;
     document.getElementById('statFacilities').textContent = data.totals.facilities;
-    document.getElementById('statUsers').textContent      = data.totals.users;
-
+   
     document.getElementById('consentApproved').textContent = data.consents.approved;
     document.getElementById('consentPending').textContent  = data.consents.pending;
     document.getElementById('consentExpired').textContent  = data.consents.expired;

@@ -170,6 +170,7 @@ class DoctorController extends Controller
         'previous_doctor' => 'nullable|string',
         'facility' => 'nullable|string',
         'date' => 'nullable|date',
+        'clinical_notes' => 'nullable|string',
     ]);
 
     $user   = JWTAuth::parseToken()->authenticate();
@@ -195,6 +196,7 @@ class DoctorController extends Controller
             'previous_doctor' => $request->previous_doctor,
             'facility'        => $request->facility,
             'date'            => $request->date,
+            'clinical_notes'  => $request->clinical_notes,
         ]),
         'encrypted' => false,
     ]);

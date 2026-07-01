@@ -40,4 +40,5 @@ Route::middleware(["auth:api", "role:facility_admin"])->prefix("facility-admin")
 Route::middleware(["auth:api", "role:moh_admin"])->prefix("moh-admin")->group(function () {
     Route::get("/analytics", [MohAdminController::class, "analytics"]);
     Route::get("/audit-logs", [MohAdminController::class, "auditLogs"]);
+    Route::get("/report/pdf", [MohAdminController::class, "generateReportPdf"]);
 });

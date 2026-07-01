@@ -97,7 +97,9 @@ async function loadRecords() {
         '<div class="col-6"><div class="small text-muted">ALLERGIES</div><div>' + (summary.allergies || '-') + '</div></div>' +
         '<div class="col-6"><div class="small text-muted">PREVIOUS DOCTOR</div><div>' + (summary.previous_doctor || '-') + '</div></div>' +
         '<div class="col-6"><div class="small text-muted">FACILITY</div><div>' + (summary.facility || '-') + '</div></div>' +
-        '</div></div></div>';
+        '</div>' +
+        '<div class="mt-2"><div class="small text-muted">CLINICAL NOTES</div><div>' + (summary.clinical_notes ? summary.clinical_notes.replace(/\n/g, '<br>') : '-') + '</div></div>' +
+        '</div></div>';
     }).join('');
   }
   document.getElementById('recPrevDoctor').value = user.name;
@@ -117,7 +119,8 @@ document.getElementById('addRecordForm').addEventListener('submit', async functi
       allergies: document.getElementById('recAllergies').value.trim(),
       previous_doctor: document.getElementById('recPrevDoctor').value.trim(),
       facility: document.getElementById('recFacility').value.trim(),
-      date: document.getElementById('recDate').value
+      date: document.getElementById('recDate').value,
+      clinical_notes: document.getElementById('recClinicalNotes').value.trim()
     });
     document.getElementById('addRecordForm').reset();
     document.getElementById('recPrevDoctor').value = user.name;
