@@ -17,6 +17,14 @@
     </div>
   </nav>
 
+  <!-- Welcome Banner -->
+<div class="pl-card card mb-4" style="background: linear-gradient(135deg, #0f5132, #146c43); border: none; border-radius: 0;">
+  <div class="card-body text-white py-4 px-4">
+    <h4 class="fw-bold mb-1 text-white">Welcome back, <span id="welcomeDoctorName">Doctor</span> 👋</h4>
+    <p class="mb-0" style="opacity: 0.85;">Search for a patient by their NUPI to get started.</p>
+  </div>
+</div>
+
   <div class="container py-4">
 
     <!-- Step 1: Search Patient -->
@@ -63,7 +71,8 @@
         <h5 class="fw-bold mb-1">Enter OTP</h5>
         <p class="text-muted small mb-3">Ask the patient for the OTP sent to their phone.</p>
         <div id="otpAlert" class="alert d-none" role="alert"></div>
-        <div class="alert alert-warning small mb-3" id="otpDemo"></div>
+        <!-- Demo only: shows OTP from log -->
+        <div class="alert alert-warning small mb-3 d-none" id="otpDemo"></div>
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="otpInput" placeholder="6-digit OTP" maxlength="6" />
           <button class="btn btn-pl-primary" id="verifyOtpBtn">Verify OTP</button>
